@@ -41,7 +41,7 @@ func main() {
 			}
 			err := unix.Kill(*pid, sig.(syscall.Signal))
 			if err != nil {
-				panic(err)
+				ohno(err)
 			}
 		}
 	}(&pid, ch)
@@ -50,7 +50,7 @@ func main() {
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	if err := cmd.Start(); err != nil {
-		panic(err)
+		ohno(err)
 	}
 	pid = cmd.Process.Pid
 
@@ -65,10 +65,14 @@ func reap() {
 	for {
 		wpid, err := unix.Wait4(-1, &waitstatus, unix.WNOHANG, &rusage)
 		if err != nil {
-			panic(err)
+			ohno(err)
 		}
 		if wpid <= 0 {
 			break
 		}
 	}
+}
+
+func ohno(err) {
+	panic(err);
 }
