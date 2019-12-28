@@ -40,7 +40,7 @@ func main() {
 				reap()
 			}
 			err := unix.Kill(*pid, sig.(syscall.Signal))
-			if err != nil {
+			if err != nil && err != unix.ESRCH {
 				panic(err)
 			}
 		}
