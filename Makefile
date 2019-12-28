@@ -15,4 +15,4 @@ $(CMDS):
 	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags '-s -w' -o $(patsubst $(CMDDIR)/%,$(OUTDIR)/%,$@) ./$@
 
 release: $(CMDS)
-	git hub release create -o -d -m "Release $(VERSION)" -a $(patsubst $(CMDDIR)/%,$(OUTDIR)/%,$<) $(VERSION)
+	echo "$(patsubst $(CMDDIR)/%,$(OUTDIR)/%,$<)" | scripts/release.sh sig $(VERSION)

@@ -40,7 +40,7 @@ func main() {
 				reap()
 			}
 			err := unix.Kill(*pid, sig.(syscall.Signal))
-			if err != nil {
+			if err != nil && err != unix.ESRCH {
 				panic(err)
 			}
 		}
@@ -62,9 +62,16 @@ func main() {
 func reap() {
 	var waitstatus unix.WaitStatus
 	var rusage unix.Rusage
+Loop:
 	for {
 		wpid, err := unix.Wait4(-1, &waitstatus, unix.WNOHANG, &rusage)
-		if err != nil {
+		switch err {
+		case unix.ECHILD:
+			break Loop
+		case unix.EINTR:
+			continue
+		case nil:
+		default:
 			panic(err)
 		}
 		if wpid <= 0 {
