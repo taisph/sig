@@ -1,0 +1,19 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "bump-minor-pre-major": true,
+  "bump-patch-for-minor-pre-major": false,
+  "draft": false,
+  "prerelease": false,
+  "separate-pull-requests": true,
+  "skip-github-release": false,
+  "bootstrap-sha": "e6154cf3d311053a6537f9d2de93444f3f554275",
+  "packages": {
+    ".": {
+      "changelog-path": "CHANGELOG.md",
+      "release-type": "go",
+      "package-name": "sig",
+      "extra-files": [
+      ]
+    }
+  }
+}
